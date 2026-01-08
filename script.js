@@ -1,3 +1,3 @@
 document.getElementById("hitler").onclick = function () {
-  alert("NIGGER!");
+  alert("VAARA! PUHELIMESI ON HAKKOITTU!");
 };
