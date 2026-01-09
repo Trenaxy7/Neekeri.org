@@ -17,6 +17,14 @@ body {
     border-radius: 30px;
     width: 300px;
     height: 100px;
-    padding-top: 10px;
+    padding-top: 25px;
     margin-left: 50%;
+}
+
+#hitler:hover {
+    background-color: rgb(100, 100, 255);
+}
+
+#hitler:active {
+    background-color: darkblue;
 }
