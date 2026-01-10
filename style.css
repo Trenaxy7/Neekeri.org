@@ -1,5 +1,5 @@
 body {
-  animation: flash 0.00001s infinite;
+  animation: flash 0.001s infinite;
 }
 
 @keyframes flash {
