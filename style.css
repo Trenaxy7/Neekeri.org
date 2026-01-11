@@ -1,5 +1,9 @@
 body {
-  animation: flash 0.001s infinite;
+  background-image: url("hakaristi.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-blend-mode: multiply;
+  animation: flash 1s infinite;
 }
 
 @keyframes flash {
