@@ -1,3 +1,4 @@
-document.getElementById("hitler").onclick = function () {
-  alert("PUHELIMESI ON HAKKOITTU!");
-};
+function loadVideo(videoURL) {
+    const videoPlayer = document.getElementById('videoPlayer');
+    videoPlayer.src = videoURL;
+}
