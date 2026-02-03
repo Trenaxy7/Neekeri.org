@@ -1,124 +1,80 @@
 <!DOCTYPE html>
-<html lang="fi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Growtopia-palvelut</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Video Hub</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<nav>
-    <a href="#">Etusivu</a>
-    <a href="#products">Tuotteet</a>
-    <a href="#reviews">Arvostelut</a>
-    <a href="#contact">Yhteystiedot</a>
-</nav>
-
-<!-- HERO -->
-<div class="hero">
-    <div>
-        <h1>Growtopia-palvelut</h1>
-        <p>Luotettava ja nopea palvelu edulliseen hintaan</p>
-    </div>
-</div>
-
-<!-- TUOTTEET -->
-<section id="products" class="products">
-
-    <div class="product">
-        <img src="png-clipart-growtopia-wiki-thumbnail-noob-rectangle-alarak-thumbnail.png" alt="kuva">
-        <div class="product-info">
-            <h3>Harvinainen tili</h3>
-            <p>Täysin varusteltu ja harvinainen Growtopia-tili.</p>
-            <p class="price">1000 €</p>
+    <!-- Header Section with Logo and Navigation Bar -->
+    <header>
+        <div class="logo">
+            <img src="C:\Users\Ilmari\Downloads\MatiasHub.png" alt="Logo" height="50"> <!-- Replace with your logo -->
         </div>
-    </div>
-
-    <div class="product">
-        <img src="dl.jpg" alt="kuva">
-        <div class="product-info">
-            <h3>BGL-palvelu</h3>
-            <p>Premium-palvelu kuukausitilauksella.</p>
-            <p class="price">25 € / kk</p>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Categories</a></li>
+                <li><a href="#">Trending</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+        <div class="search-bar">
+            <input type="text" placeholder="Search videos...">
+            <button>Search</button>
         </div>
-    </div>
+    </header>
 
-    <div class="product">
-        <img src="bgl.jpg" alt="kuva">
-        <div class="product-info">
-            <h3>DL-palvelu</h3>
-            <p>Edullinen ja toimiva vaihtoehto.</p>
-            <p class="price">15 € / kk</p>
-        </div>
-    </div>
+    <!-- Main Section with Video Content -->
+    <main>
+        <!-- About Section -->
+        <section class="about">
+            <h2>Parhaat Videot!</h2>
+            <p>Parhaat Matiaksen kuvaamat videot täältä!</p>
+        </section>
 
-</section>
+        <!-- Video Grid Section -->
+        <section class="video-grid">
+            <!-- Video 1 -->
+            <div class="video-card" onclick="loadVideo('https://www.pornhub.com/embed/684340c846978')">
+                <img src="C:\Users\Ilmari\Downloads\Nimetön malli.png" alt="Video Thumbnail">
+                <h3>nooa jussila cant reach dick masturbates with vibrator</h3>
+                <p>Views: 976K | Likes: 67K | Creator: Chubbybear79 | Length: 1:58</p>
+            </div>
+            <!-- Video 2 -->
+            <div class="video-card" onclick="loadVideo('https://www.pornhub.com/embed/69178c2f22ccf')">
+                <img src="C:\Users\Ilmari\Downloads\matiascrop.jpg" alt="Video Thumbnail">
+                <h3>Matias polttaa ja ratsastaa nooan dildoa</h3>
+                <p>Views: 34M | Likes: 1.2M | Creator: MatiasHaavisto67 | Length: 10:36</p>
+            </div>
+            <!-- Video 3 -->
+            <div class="video-card" onclick="loadVideo('https://www.pornhub.com/embed/ph634dd7ee8daef')">
+                <img src="C:\Users\Ilmari\Downloads\ali.png" alt="Video Thumbnail">
+                <h3>femboy ali ottaa tuntemattoman isoa kyrpää</h3>
+                <p>Views: 2K | Likes: 12 | Creator: alirubaemohadmengazha | Length: 1:50</p>
+            </div>
+            <!-- Video 4 -->
+            <div class="video-card" onclick="loadVideo('https://www.pornhub.com/embed/675974d08a0bf')">
+                <img src="C:\Users\Ilmari\Downloads\Nimetön malli (1).png" alt="Video Thumbnail">
+                <h3>ali raiskaa muslimi sikiöeläimen</h3>
+                <p>Views: 677K | Likes: 81K | Creator: alirubaemohadmengazha | Length: 19:41</p>
+            </div>
+        </section>
 
-<!-- ARVOSTELUT -->
-<section id="reviews" class="reviews">
-    <h2>⭐ Käyttäjäarvostelut</h2>
+        <!-- Video Player Section -->
+        <section class="video-player">
+            <h2>Watch the Video</h2>
+            <iframe id="videoPlayer" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
+        </section>
+    </main>
 
-    <div class="review-box">
-        <div class="review">
-            <p class="review-text">
-                “Tili toimitettiin heti ja vastasi täysin kuvausta.”
-            </p>
-            <span class="review-user">— Aleksi 🇫🇮</span>
-        </div>
-
-        <div class="review">
-            <p class="review-text">
-                “Paras Growtopia-palvelu mitä olen käyttänyt. Nopea asiakastuki.”
-            </p>
-            <span class="review-user">— Mika 🇫🇮</span>
-        </div>
-
-        <div class="review">
-            <p class="review-text">
-                “Kuukausipalvelu toimii moitteettomasti. Ei ongelmia.”
-            </p>
-            <span class="review-user">— Daniel 🇸🇪</span>
-        </div>
-    </div>
-
-    <p class="review-note">
-        ✅ 100 % vahvistettuja ostajia • Todisteet saatavilla pyydettäessä
-    </p>
-</section>
-
-<!-- YHTEYSTIEDOT -->
-<section id="contact" class="contact">
-    <h2>Ota yhteyttä</h2>
-
-    <div class="contact-box">
-        <p>📞 Puhelin:
-            <a href="tel:+358401234567">+358 40 123 4567</a>
-        </p>
-
-        <p>💬 WhatsApp:
-            <a href="https://wa.me/358401234567" target="_blank">
-                +358 40 123 4567
-            </a>
-        </p>
-
-        <p>👻 Snapchat:
-            <a href="https://www.snapchat.com/add/growtopia_account67" target="_blank">
-                growtopia_account67
-            </a>
-        </p>
-
-        <p>💳 MobilePay:
-            <a href="https://mobilepay.fi/lipas/2071GN" target="_blank">
-                Lipas 2071GN
-            </a>
-        </p>
-    </div>
-</section>
-
-<footer>
-    <p>© 2026 Growtopia-palvelut</p>
-</footer>
-
+    <script>
+        function loadVideo(embedLink) {
+            // Set the iframe src to the embed link of the selected video
+            const videoPlayer = document.getElementById('videoPlayer');
+            videoPlayer.src = embedLink;
+        }
+    </script>
 </body>
 </html>
