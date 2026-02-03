@@ -1,0 +1,131 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and Main Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1b1b1b;
+    color: #ffffff;
+}
+
+/* Header Styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #222;
+    color: rgb(255, 255, 255);
+}
+
+header .logo img {
+    height: 50px;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li {
+    display: inline;
+}
+
+header nav ul li a {
+    color: #ff8800;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+header .search-bar input {
+    padding: 10px;
+    width: 200px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+header .search-bar button {
+    padding: 10px;
+    background-color: #ff8800;
+    border: none;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+header .search-bar button:hover {
+    background-color: #ff8800;
+}
+
+/* About Section */
+.about {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.about h2 {
+    font-size: 36px;
+    color: #ffffff;
+}
+
+.about p {
+    font-size: 18px;
+    color: #ffffff;
+}
+
+/* Video Grid Section */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
+}
+
+.video-card {
+    background-color: rgb(39, 39, 39);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.video-card:hover {
+    transform: scale(1.05);
+}
+
+.video-card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.video-card h3 {
+    font-size: 18px;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.video-card p {
+    font-size: 14px;
+    color: #ffffff;
+}
+
+/* Video Player Section */
+.video-player {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.video-player iframe {
+    border-radius: 10px;
+}
