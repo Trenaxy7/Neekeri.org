@@ -91,7 +91,7 @@ header .search-bar button:hover {
 
 .video-card {
     background-color: rgb(39, 39, 39);
-    padding: 15px;
+    padding: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     width: 100%;
@@ -100,20 +100,20 @@ header .search-bar button:hover {
 }
 
 .video-card:hover {
-    transform: scale(1.04);
+    transform: scale(1.05);
     box-shadow: 0 8px 16px rgba(255, 69, 0, 0.2);
 }
 
 .video-card img {
     width: 100%;
-    border-radius: 8px;
-    margin-bottom: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .video-card h3 {
     font-size: 17px;
     color: #ffffff;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     line-height: 1.3;
 }
 
