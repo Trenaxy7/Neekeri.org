@@ -87,16 +87,11 @@
 
   <input type="file" name="file" accept="video/*" required>
   <button type="submit">Upload</button>
-  
-<form
-  action="https://script.google.com/macros/s/AKfycbwWYCCJfNRn_RUmMZJWaXtMWBJUh5QjV2fmV6dDO_ReO3uKbJK5clIMciDIaYKYVsry/exec"
-  method="POST"
-  enctype="multipart/form-data"
-  target="f">
-
-  <input type="file" name="file" required>
-  <button type="submit">Upload</button>
 </form>
+
+<iframe name="uploadFrame" style="display:none"></iframe>
+<p id="status"></p>
+
 
 <iframe name="f" style="display:none"></iframe>
 
