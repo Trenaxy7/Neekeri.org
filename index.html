@@ -78,8 +78,8 @@
 
 <div id="videos"></div>
 
-<input type="file" id="f">
-<button onclick="u()">Upload</button>
+<input type="file" id="file" accept="video/*">
+<button onclick="upload()">Upload</button>
 <a id="l" target="_blank"></a>
 
     <!-- Video Player -->
@@ -99,7 +99,23 @@
 </main>
 
 <script>
+function upload() {
+  const f = document.getElementById("file").files[0];
+  if (!f) return alert("Pick a video");
 
+  const r = new FileReader();
+  r.onload = () => {
+    fetch("https://script.google.com/macros/s/AKfycbwWYCCJfNRn_RUmMZJWaXtMWBJUh5QjV2fmV6dDO_ReO3uKbJK5clIMciDIaYKYVsry/exec", {
+      method: "POST",
+      body: new URLSearchParams({
+        file: r.result.split(",")[1],
+        name: f.name,
+        type: f.type
+      })
+    }).then(() => alert("Uploaded"));
+  };
+  r.readAsDataURL(f);
+}
     fetch("https://script.google.com/macros/s/AKfycbwWYCCJfNRn_RUmMZJWaXtMWBJUh5QjV2fmV6dDO_ReO3uKbJK5clIMciDIaYKYVsry/exec")
   .then(r => r.text())
   .then(html => {
