@@ -78,6 +78,18 @@
 
 <div id="videos"></div>
 
+<form
+  action="https://script.google.com/macros/s/AKfycbwWYCCJfNRn_RUmMZJWaXtMWBJUh5QjV2fmV6dDO_ReO3uKbJK5clIMciDIaYKYVsry/exec"
+  method="POST"
+  enctype="multipart/form-data"
+  target="hiddenFrame">
+
+  <input type="file" name="file" accept="video/*" required>
+  <button type="submit">Upload</button>
+</form>
+
+<iframe name="hiddenFrame" style="display:none"></iframe>
+
 <input type="file" id="file" accept="video/*">
 <button onclick="upload()">Upload</button>
 <a id="l" target="_blank"></a>
@@ -99,52 +111,32 @@
 </main>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwWYCCJfNRn_RUmMZJWaXtMWBJUh5QjV2fmV6dDO_ReO3uKbJK5clIMciDIaYKYVsry/exec";
+/* ---------- CONFIG ---------- */
+const SCRIPT_URL = "SCRIPT_URL_HERE";
 
-/* ---------- UPLOAD ---------- */
-function upload() {
-  const f = document.getElementById("file").files[0];
-  if (!f) return alert("Pick a video");
-
-  const r = new FileReader();
-  r.onload = () => {
-    fetch(SCRIPT_URL, {
-      method: "POST",
-      body: new URLSearchParams({
-        file: r.result.split(",")[1],
-        name: f.name,
-        type: f.type
-      })
-    })
-    .then(r => r.text())
-    .then(t => alert("Server says: " + t))
-    .catch(e => alert("ERROR: " + e));
-  };
-  r.readAsDataURL(f);
-}
-
-/* ---------- LOAD VIDEOS ---------- */
+/* ---------- LOAD DRIVE VIDEOS ---------- */
 fetch(SCRIPT_URL)
   .then(r => r.text())
   .then(html => {
     document.getElementById("videos").innerHTML = html;
+  })
+  .catch(err => {
+    document.getElementById("videos").textContent = "Failed to load videos";
+    console.error(err);
   });
 
-/* ---------- YOUR OTHER THINGS (KEPT) ---------- */
+/* ---------- CARD CLICK PLAYER ---------- */
 const cards = document.querySelectorAll('.video-card');
 const player = document.getElementById('videoPlayer');
 
 cards.forEach(card => {
   card.addEventListener('click', () => {
-    const embed = card.dataset.embed;
-    player.src = embed;
+    player.src = card.dataset.embed;
     player.scrollIntoView({ behavior: 'smooth' });
   });
 });
 </script>
 
+
 </body>
 </html>
-
-
-
