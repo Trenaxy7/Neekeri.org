@@ -99,40 +99,48 @@
 </main>
 
 <script>
+const SCRIPT_URL = "PASTE_NEW_SCRIPT_URL_HERE";
+
+/* ---------- UPLOAD ---------- */
 function upload() {
   const f = document.getElementById("file").files[0];
   if (!f) return alert("Pick a video");
 
   const r = new FileReader();
   r.onload = () => {
-    fetch("https://script.google.com/macros/s/AKfycbwWYCCJfNRn_RUmMZJWaXtMWBJUh5QjV2fmV6dDO_ReO3uKbJK5clIMciDIaYKYVsry/exec", {
+    fetch(SCRIPT_URL, {
       method: "POST",
       body: new URLSearchParams({
         file: r.result.split(",")[1],
         name: f.name,
         type: f.type
       })
-    }).then(() => alert("Uploaded"));
+    })
+    .then(r => r.text())
+    .then(t => alert("Server says: " + t))
+    .catch(e => alert("ERROR: " + e));
   };
   r.readAsDataURL(f);
 }
-    fetch("https://script.google.com/macros/s/AKfycbwWYCCJfNRn_RUmMZJWaXtMWBJUh5QjV2fmV6dDO_ReO3uKbJK5clIMciDIaYKYVsry/exec")
+
+/* ---------- LOAD VIDEOS ---------- */
+fetch(SCRIPT_URL)
   .then(r => r.text())
   .then(html => {
     document.getElementById("videos").innerHTML = html;
   });
 
-    const cards = document.querySelectorAll('.video-card');
-    const player = document.getElementById('videoPlayer');
+/* ---------- YOUR OTHER THINGS (KEPT) ---------- */
+const cards = document.querySelectorAll('.video-card');
+const player = document.getElementById('videoPlayer');
 
-    cards.forEach(card => {
-        card.addEventListener('click', () => {
-            const embed = card.dataset.embed;
-            player.src = embed;
-            player.scrollIntoView({ behavior: 'smooth' });
-        });
-        
-    });
+cards.forEach(card => {
+  card.addEventListener('click', () => {
+    const embed = card.dataset.embed;
+    player.src = embed;
+    player.scrollIntoView({ behavior: 'smooth' });
+  });
+});
 </script>
 
 </body>
