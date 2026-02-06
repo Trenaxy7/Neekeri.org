@@ -76,6 +76,12 @@
 
     </section>
 
+<div id="videos"></div>
+
+<input type="file" id="f">
+<button onclick="u()">Upload</button>
+<a id="l" target="_blank"></a>
+
     <!-- Video Player -->
     <section class="video-player">
         <h2>Watch Video</h2>
@@ -88,11 +94,18 @@
         </iframe>
     </section>
 
-    <h1>© 2026 Google LLC. Sivuston on tehnyt Google itse.</h1>
+    <h1>© 2025 Google LLC. Sivuston on tehnyt Google itse.</h1>
 
 </main>
 
 <script>
+
+    fetch("https://script.google.com/macros/s/AKfycbwWYCCJfNRn_RUmMZJWaXtMWBJUh5QjV2fmV6dDO_ReO3uKbJK5clIMciDIaYKYVsry/exec")
+  .then(r => r.text())
+  .then(html => {
+    document.getElementById("videos").innerHTML = html;
+  });
+
     const cards = document.querySelectorAll('.video-card');
     const player = document.getElementById('videoPlayer');
 
@@ -102,10 +115,9 @@
             player.src = embed;
             player.scrollIntoView({ behavior: 'smooth' });
         });
+        
     });
 </script>
 
 </body>
 </html>
-
-
