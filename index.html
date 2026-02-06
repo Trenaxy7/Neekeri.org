@@ -89,7 +89,12 @@
   <button type="submit">Upload</button>
 </form>
 
-<iframe name="uploadFrame" style="display:none"></iframe>
+<iframe
+  name="uploadFrame"
+  style="display:none"
+  onload="document.getElementById('status').textContent='Upload finished';">
+</iframe>
+
 <p id="status"></p>
 
 
@@ -142,3 +147,4 @@ cards.forEach(card => {
 
 </body>
 </html>
+
