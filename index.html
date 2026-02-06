@@ -82,13 +82,21 @@
   action="https://script.google.com/macros/s/AKfycbwWYCCJfNRn_RUmMZJWaXtMWBJUh5QjV2fmV6dDO_ReO3uKbJK5clIMciDIaYKYVsry/exec"
   method="POST"
   enctype="multipart/form-data"
-  target="hiddenFrame">
+  target="uploadFrame"
+  onsubmit="document.getElementById('status').textContent='Uploading…';">
 
   <input type="file" name="file" accept="video/*" required>
   <button type="submit">Upload</button>
 </form>
 
-<iframe name="hiddenFrame" style="display:none"></iframe>
+<iframe
+  name="uploadFrame"
+  style="display:none"
+  onload="document.getElementById('status').textContent='Upload finished';">
+</iframe>
+
+<p id="status"></p>
+
 
 <input type="file" id="file" accept="video/*">
 <button onclick="upload()">Upload</button>
@@ -106,13 +114,13 @@
         </iframe>
     </section>
 
-    <h1>© 2025 Google LLC. Sivuston on tehnyt Google itse.</h1>
+    <h1>© 2026 Google LLC. Sivuston on tehnyt Google itse.</h1>
 
 </main>
 
 <script>
 /* ---------- CONFIG ---------- */
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwWYCCJfNRn_RUmMZJWaXtMWBJUh5QjV2fmV6dDO_ReO3uKbJK5clIMciDIaYKYVsry/exec";
+const SCRIPT_URL = "SCRIPT_URL_HERE";
 
 /* ---------- LOAD DRIVE VIDEOS ---------- */
 fetch(SCRIPT_URL)
@@ -140,4 +148,3 @@ cards.forEach(card => {
 
 </body>
 </html>
-
