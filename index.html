@@ -110,16 +110,14 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyAxIu03aAjLI2s4Fi9w7cDTwnGagGehxOLSxbUWjhZ5fxUjjA3-pVKdaGdp_JyP2WS/exec";
 
 /* ---------- LOAD DRIVE VIDEOS ---------- */
-fetch(SCRIPT_URL)
+fetch("https://script.google.com/macros/s/AKfycbyAxIu03aAjLI2s4Fi9w7cDTwnGagGehxOLSxbUWjhZ5fxUjjA3-pVKdaGdp_JyP2WS/exec")
   .then(r => r.text())
   .then(html => {
     document.getElementById("videos").innerHTML = html;
   })
-  .catch(err => {
+  .catch(() => {
     document.getElementById("videos").textContent = "Failed to load videos";
-    console.error(err);
   });
-
 /* ---------- CARD CLICK PLAYER ---------- */
 const cards = document.querySelectorAll('.video-card');
 const player = document.getElementById('videoPlayer');
@@ -135,6 +133,7 @@ cards.forEach(card => {
 
 </body>
 </html>
+
 
 
 
