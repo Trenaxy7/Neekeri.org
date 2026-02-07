@@ -115,51 +115,39 @@
         });
     });
 
-    const supabaseUrl = "https://mpbfujjgxpobsfpqurlc.supabase.co"
-const supabaseAnonKey =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wYmZ1ampneHBvYnNmcHF1cmxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0NzE1ODEsImV4cCI6MjA4NjA0NzU4MX0.l3TeRxam4ZlI2eOCeeRv0JkE_3Q_PZwzJZ1W2Hm6WWo"
+const supabaseUrl = "https://mpbfujjgxpobsfpqurlc.supabase.co"
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wYmZ1ampneHBvYnNmcHF1cmxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0NzE1ODEsImV4cCI6MjA4NjA0NzU4MX0.l3TeRxam4ZlI2eOCeeRv0JkE_3Q_PZwzJZ1W2Hm6WWo"
 
-const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey)
+const supabaseClient = supabase.createClient(
+  supabaseUrl,
+  supabaseAnonKey
+)
 
 async function upload() {
   const file = document.getElementById("file").files[0]
   if (!file) return alert("Pick a video")
 
-  if (!file.type.startsWith("video/")) {
-    alert("Only video files allowed")
-    return
-  }
-
-  if (file.size > 200 * 1024 * 1024) {
-    alert("Max size 200MB")
-    return
-  }
-
   const path = `${Date.now()}_${file.name}`
 
-  const { error } = await supabase
+  const { error } = await supabaseClient
     .storage
     .from("videos")
     .upload(path, file)
 
-  if (error) {
-    alert(error.message)
-    return
-  }
-
+  if (error) return alert(error.message)
   loadVideos()
 }
 
 async function loadVideos() {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient
     .storage
     .from("videos")
-    .list("", { limit: 100, sortBy: { column: "created_at", order: "desc" } })
+    .list("", { limit: 50 })
 
-  if (error) {
-    alert(error.message)
-    return
-  }
+  if (error) return alert(error.message)
+
+  console.log("Videos:", data)
+}
 
   const container = document.getElementById("videos")
   container.innerHTML = ""
@@ -179,5 +167,6 @@ loadVideos()
     
 </body>
 </html>
+
 
 
