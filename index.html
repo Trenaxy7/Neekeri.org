@@ -171,7 +171,10 @@ async function upload() {
 
 /* ---------- LOAD RECENT VIDEOS ---------- */
 async function loadRecentVideos() {
-  const { data, error } = await supabaseClient
+  const container = document.getElementById("recent-videos")
+  container.innerHTML = ""
+
+  const { data: files, error } = await supabaseClient
     .storage
     .from("videos")
     .list("", { limit: 50, sortBy: { column: "created_at", order: "desc" } })
@@ -181,20 +184,24 @@ async function loadRecentVideos() {
     return
   }
 
-  const container = document.getElementById("recent-videos")
-  container.innerHTML = ""
-
-  if (data.length === 0) {
+  if (!files || files.length === 0) {
     container.innerHTML = "<p>No uploads yet.</p>"
     return
   }
 
-  data.forEach(file => {
+  for (const file of files) {
+    const { data: meta, error: metaError } =
+      await supabaseClient.storage
+        .from("videos")
+        .getMetadata(file.name)
+
+    if (metaError) continue
+
+    const title = meta.metadata?.title || "Untitled"
+    const author = meta.metadata?.author || "Anonymous"
+
     const url =
       `${supabaseUrl}/storage/v1/object/public/videos/${file.name}`
-
-    const title = file.metadata?.title || "Untitled"
-    const author = file.metadata?.author || "Anonymous"
 
     const card = document.createElement("div")
     card.className = "video-card"
@@ -208,7 +215,7 @@ async function loadRecentVideos() {
     `
 
     container.appendChild(card)
-  })
+  }
 }
 
 
@@ -216,6 +223,7 @@ loadRecentVideos()
 </script>
 </body>
 </html>
+
 
 
 
