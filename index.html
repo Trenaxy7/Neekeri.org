@@ -135,20 +135,31 @@ function closeUploadModal() {
 /* ---------- UPLOAD FUNCTION ---------- */
 async function upload() {
   const fileInput = document.getElementById("file")
-  const file = fileInput.files[0]
+  const files = fileInput.files
   const status = document.getElementById("uploadStatus")
-  if (!file) return status.textContent = "Pick a video first, idiot";
-  
-  const path = `${Date.now()}_${file.name}`
-  status.textContent = "Uploading...";
-  
-  const { error } = await supabaseClient.storage.from("videos").upload(path, file)
-  if (error) {
-    status.textContent = "Upload failed: " + error.message
+
+  if (!files || files.length === 0) {
+    status.textContent = "Pick at least one video first"
     return
   }
-  
-  status.textContent = "Upload successful! Refreshing recent videos..."
+
+  status.textContent = `Uploading ${files.length} video(s)...`
+
+  for (const file of files) {
+    const path = `${Date.now()}_${file.name}`
+
+    const { error } = await supabaseClient
+      .storage
+      .from("videos")
+      .upload(path, file)
+
+    if (error) {
+      status.textContent = `Failed on ${file.name}: ${error.message}`
+      return
+    }
+  }
+
+  status.textContent = "All uploads successful!"
   closeUploadModal()
   loadRecentVideos()
 }
@@ -191,3 +202,4 @@ loadRecentVideos()
 </script>
 </body>
 </html>
+
