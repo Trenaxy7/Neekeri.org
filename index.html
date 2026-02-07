@@ -4,480 +4,190 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MatiasHub</title>
-    <style>
-        /* Global Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #0f0f0f;
-            color: #e5e5e5;
-            line-height: 1.5;
-        }
-
-        /* Header */
-        header.header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 5%;
-            background-color: #181818;
-            position: sticky;
-            top: 0;
-            z-index: 999;
-            border-bottom: 1px solid #222;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .logo img {
-            height: 44px;
-        }
-
-        .nav-and-upload {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-            flex-wrap: wrap;
-        }
-
-        .nav ul {
-            list-style: none;
-            display: flex;
-            gap: 28px;
-        }
-
-        .nav a {
-            color: #aaa;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 15px;
-            transition: color 0.2s;
-        }
-
-        .nav a:hover {
-            color: #ff9800;
-        }
-
-        /* Upload in header */
-        .header-upload {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: #222;
-            padding: 8px 14px;
-            border-radius: 8px;
-            border: 1px solid #333;
-        }
-
-        .header-upload input[type="file"] {
-            color: #ddd;
-            font-size: 14px;
-        }
-
-        .upload-btn {
-            padding: 8px 16px;
-            background: #ff5722;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s;
-        }
-
-        .upload-btn:hover {
-            background: #ff7043;
-            transform: translateY(-1px);
-        }
-
-        .search-bar {
-            display: flex;
-            flex: 1;
-            max-width: 340px;
-        }
-
-        .search-bar input {
-            flex: 1;
-            padding: 10px 14px;
-            background: #121212;
-            border: 1px solid #303030;
-            border-radius: 20px 0 0 20px;
-            color: white;
-            outline: none;
-        }
-
-        .search-bar button {
-            padding: 10px 18px;
-            background: #303030;
-            border: 1px solid #303030;
-            color: white;
-            border-radius: 0 20px 20px 0;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .search-bar button:hover {
-            background: #444;
-        }
-
-        /* Main content */
-        main {
-            max-width: 1480px;
-            margin: 0 auto;
-            padding: 0 5%;
-        }
-
-        .about {
-            text-align: center;
-            padding: 40px 0 20px;
-        }
-
-        .about h2 {
-            font-size: 2.4rem;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-
-        .about p {
-            color: #aaa;
-            font-size: 1.1rem;
-        }
-
-        /* Video Sections */
-        .section-title {
-            font-size: 1.8rem;
-            margin: 48px 0 24px;
-            color: #fff;
-        }
-
-        .video-grid,
-        .recent-videos {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-
-        .video-card {
-            background: #181818;
-            border-radius: 12px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            border: 1px solid #222;
-        }
-
-        .video-card:hover {
-            transform: translateY(-6px);
-            border-color: #444;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.5);
-        }
-
-        .video-card img,
-        .video-card video {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            object-fit: cover;
-            background: #000;
-        }
-
-        .video-card .content {
-            padding: 12px 14px;
-        }
-
-        .video-card h3 {
-            font-size: 1.05rem;
-            margin-bottom: 6px;
-            color: #fff;
-            line-height: 1.35;
-        }
-
-        .video-card p {
-            font-size: 0.82rem;
-            color: #aaa;
-            margin-bottom: 10px;
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .tag {
-            background: #252525;
-            color: #ff6b6b;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.78rem;
-            border: 1px solid #333;
-        }
-
-        /* Video Player */
-        .video-player {
-            margin: 60px 0;
-            text-align: center;
-        }
-
-        .video-player h2 {
-            margin-bottom: 24px;
-            font-size: 1.8rem;
-        }
-
-        #videoPlayer {
-            width: 100%;
-            max-width: 1100px;
-            aspect-ratio: 16 / 9;
-            border-radius: 12px;
-            background: #000;
-            border: none;
-        }
-
-        .footer-note {
-            text-align: center;
-            color: #555;
-            padding: 60px 0 40px;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 1024px) {
-            header.header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .nav-and-upload {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 16px;
-                width: 100%;
-            }
-            .search-bar {
-                width: 100%;
-                max-width: none;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
 <header class="header">
     <div class="logo">
-        <img src="https://i.ibb.co/wZ78FCBL/Matias-Hub.png" alt="MatiasHub">
+        <img src="https://i.ibb.co/wZ78FCBL/Matias-Hub.png" alt="Logo" height="50">
     </div>
-
-    <div class="nav-and-upload">
-        <nav class="nav">
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Categories</a></li>
-                <li><a href="#">Trending</a></li>
-                <li><a href="#">About</a></li>
-            </ul>
-        </nav>
-
-        <div class="header-upload">
-            <input type="file" id="file" accept="video/*">
-            <button class="upload-btn" onclick="upload()">Upload Degenerate Shit</button>
-        </div>
-    </div>
-
+   
+    <nav class="nav">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">Trending</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </nav>
     <div class="search-bar">
-        <input type="text" placeholder="Search for nigger farts and CP...">
+        <input type="text" placeholder="Search videos...">
         <button>Search</button>
     </div>
 </header>
 
+<!-- Upload Button (top) -->
+<div class="upload-section">
+    <button class="upload-btn" onclick="openUploadModal()">Upload Video</button>
+</div>
+
 <main>
     <section class="about">
         <h2>Featured Videos</h2>
-        <p>The sickest, freshest, most fucked up content straight from the sewers.</p>
+        <p>Browse the latest uploads.</p>
     </section>
 
-    <!-- Featured grid -->
+    <!-- Video Grid (Featured) -->
     <section class="video-grid">
         <div class="video-card" data-embed="https://www.pornhub.com/embed/684340c846978">
-            <img src="https://i.ibb.co/gMCJtsLq/Nimet-n-malli.png/320x180" alt="Thumbnail">
-            <div class="content">
-                <h3>Nooa Jussila niin läski ei yletä munaan</h3>
-                <p>Views: 13.4K | Likes: 2K | NooaNussila67 | 1:58</p>
-                <div class="tags">
-                    <span class="tag">#nooajussila</span>
-                    <span class="tag">#läski</span>
-                    <span class="tag">#homo</span>
-                </div>
+            <img src="https://i.ibb.co/gMCJtsLq/Nimet-n-malli.png/320x180" alt="Video Thumbnail">
+            <h3>Nooa Jussila niin läski ei yletä munaan</h3>
+            <p>Views: 13.4K | Likes: 2K | Creator: NooaNussila67 | Length: 1:58</p>
+            <div class="tags">
+                #nooajussila #läski #homo
             </div>
         </div>
-
         <div class="video-card" data-embed="https://www.pornhub.com/embed/69178c2f22ccf">
-            <img src="https://i.ibb.co/9kjSKWBs/matiascrop.jpg/320x180" alt="Thumbnail">
-            <div class="content">
-                <h3>matias polttaa ja ratsastaa nooa jussilan dildoa</h3>
-                <p>Views: 12M | Likes: 459K | MatiasTHE_ChildPredator | 10:36</p>
-                <div class="tags">
-                    <span class="tag">#nooajussila</span>
-                    <span class="tag">#matias</span>
-                    <span class="tag">#raiskaus</span>
-                </div>
+            <img src="https://i.ibb.co/9kjSKWBs/matiascrop.jpg/320x180" alt="Video Thumbnail">
+            <h3>matias polttaa ja ratsastaa nooa jussilan dildoa</h3>
+            <p>Views: 12M | Likes: 459K | Creator: MatiasTHE_ChildPredator | Length: 10:36</p>
+            <div class="tags">
+                #nooajussila #matias #raiskaus
             </div>
         </div>
-
+       
         <div class="video-card" data-embed="https://www.pornhub.com/embed/ph634dd7ee8daef">
-            <img src="https://i.ibb.co/0VWLVGXk/01t0a1py9hrmr0cw68stq8haqw-result-0.png/320x180" alt="Thumbnail">
-            <div class="content">
-                <h3>ali femboy ottaa fanin munaa onlyfanssissa</h3>
-                <p>Views: 6K | Likes: 865 | AliMohammedGazaRUbaye | 1:50</p>
-                <div class="tags">
-                    <span class="tag">#femboy</span>
-                    <span class="tag">#neekeri</span>
-                </div>
+            <img src="https://i.ibb.co/0VWLVGXk/01t0a1py9hrmr0cw68stq8haqw-result-0.png/320x180" alt="Video Thumbnail">
+            <h3>ali femboy ottaa fanin munaa onlyfanssissa</h3>
+            <p>Views: 6K | Likes: 865 | Creator: AliMohammedGazaRUbaye | Length: 1:50</p>
+            <div class="tags">
+                #femboy #alrupaualimohmedgaza #neekeri
             </div>
         </div>
-
         <div class="video-card" data-embed="https://www.pornhub.com/embed/675974d08a0bf">
-            <img src="https://i.ibb.co/wrJF5kVw/pcs2pxx6j1rmw0cw68tb6frj8r-result-0.png/320x180" alt="Thumbnail">
-            <div class="content">
-                <h3>muslimi sikiö ottaa alin kyrpää</h3>
-                <p>Views: 89K | Likes: 16K | AliMohammedGazaRUbaye | 19:41</p>
-                <div class="tags">
-                    <span class="tag">#cp</span>
-                    <span class="tag">#scat</span>
-                    <span class="tag">#sikiö</span>
-                </div>
+            <img src="https://i.ibb.co/wrJF5kVw/pcs2pxx6j1rmw0cw68tb6frj8r-result-0.png/320x180" alt="Video Thumbnail">
+            <h3>muslimi sikiö ottaa alin kyrpää</h3>
+            <p>Views: 89K | Likes: 16K | Creator: AliMohammedGazaRUbaye | Length: 19:41</p>
+            <div class="tags">
+                #cp #scat #sikiö
             </div>
         </div>
     </section>
 
     <!-- Recent Uploads -->
-    <h2 class="section-title">Recent Uploads - Freshly Raped Content</h2>
-    <section class="recent-videos" id="videos">
-        <!-- Filled by JS -->
+    <section class="recent-section">
+        <h2>Recent Uploads</h2>
+        <div id="recent-videos" class="video-grid"></div>
     </section>
 
-    <!-- Player -->
+    <!-- Video Player -->
     <section class="video-player">
-        <h2>Watch This Nasty Shit</h2>
+        <h2>Watch Video</h2>
         <iframe
-            id="videoPlayer"
-            frameborder="0"
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowfullscreen>
+          id="videoPlayer"
+          width="100%"
+          height="500"
+          frameborder="0"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen>
         </iframe>
     </section>
 
-    <div class="footer-note">
-        © 2026 Google LLC. Built by Google to promote diversity and child grooming worldwide.
-    </div>
+    <h1>© 2026 Google LLC. Sivuston on tehnyt Google itse.</h1>
 </main>
+
+<!-- Upload Modal -->
+<div id="uploadModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeUploadModal()">&times;</span>
+        <h2>Upload Your Video</h2>
+        <input type="file" id="file" accept="video/*">
+        <button onclick="upload()">Upload Now</button>
+        <p id="uploadStatus"></p>
+    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-    // All JS at the bottom so functions exist when buttons are clicked
+/* ---------- HARD-CODED CARDS ---------- */
+const player = document.getElementById("videoPlayer")
+document.querySelectorAll(".video-card").forEach(card => {
+  card.addEventListener("click", () => {
+    player.src = card.dataset.embed
+    player.scrollIntoView({ behavior: "smooth" })
+  })
+})
 
-    const player = document.getElementById("videoPlayer");
+/* ---------- SUPABASE SETUP ---------- */
+const supabaseUrl = "https://mpbfujjgxpobsfpqurlc.supabase.co"
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wYmZ1ampneHBvYnNmcHF1cmxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0NzE1ODEsImV4cCI6MjA4NjA0NzU4MX0.l3TeRxam4ZlI2eOCeeRv0JkE_3Q_PZwzJZ1W2Hm6WWo"
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey)
 
-    // Featured cards click handler
-    document.querySelectorAll(".video-card").forEach(card => {
-        card.addEventListener("click", () => {
-            player.src = card.dataset.embed;
-            player.scrollIntoView({ behavior: "smooth", block: "center" });
-        });
-    });
+/* ---------- UPLOAD MODAL ---------- */
+function openUploadModal() {
+  document.getElementById("uploadModal").style.display = "block";
+  document.getElementById("uploadStatus").textContent = "";
+}
+function closeUploadModal() {
+  document.getElementById("uploadModal").style.display = "none";
+}
 
-    // Supabase - declared ONLY ONCE
-    const supabaseUrl = "https://mpbfujjgxpobsfpqurlc.supabase.co";
-    const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wYmZ1ampneHBvYnNmcHF1cmxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0NzE1ODEsImV4cCI6MjA4NjA0NzU4MX0.l3TeRxam4ZlI2eOCeeRv0JkE_3Q_PZwzJZ1W2Hm6WWo";
-    const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
+/* ---------- UPLOAD FUNCTION ---------- */
+async function upload() {
+  const fileInput = document.getElementById("file")
+  const file = fileInput.files[0]
+  const status = document.getElementById("uploadStatus")
+  if (!file) return status.textContent = "Pick a video first, idiot";
+  
+  const path = `${Date.now()}_${file.name}`
+  status.textContent = "Uploading...";
+  
+  const { error } = await supabaseClient.storage.from("videos").upload(path, file)
+  if (error) {
+    status.textContent = "Upload failed: " + error.message
+    return
+  }
+  
+  status.textContent = "Upload successful! Refreshing recent videos..."
+  closeUploadModal()
+  loadRecentVideos()
+}
 
-    // Upload function
-    async function upload() {
-        const fileInput = document.getElementById("file");
-        const file = fileInput.files[0];
+/* ---------- LOAD RECENT VIDEOS ---------- */
+async function loadRecentVideos() {
+  const { data, error } = await supabaseClient.storage.from("videos").list("", { limit: 50 })
+  if (error) {
+    console.error(error)
+    return
+  }
+  
+  const container = document.getElementById("recent-videos")
+  container.innerHTML = ""
+  
+  if (data.length === 0) {
+    container.innerHTML = "<p>No recent uploads yet.</p>"
+    return
+  }
+  
+  data.forEach(file => {
+    const card = document.createElement("div")
+    card.className = "video-card"
+    
+    const videoUrl = `${supabaseUrl}/storage/v1/object/public/videos/${file.name}`
+    
+    card.innerHTML = `
+      <video controls width="100%" style="border-radius:10px;">
+        <source src="${videoUrl}" type="video/mp4">
+      </video>
+      <h3>${file.name}</h3>
+      <p>Uploaded: ${new Date(file.created_at).toLocaleDateString()}</p>
+    `
+    
+    container.appendChild(card)
+  })
+}
 
-        if (!file) {
-            alert("Pick a fucking video you lazy nigger");
-            return;
-        }
-
-        const path = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
-
-        try {
-            const { error } = await supabase.storage
-                .from("videos")
-                .upload(path, file);
-
-            if (error) {
-                alert("Upload failed: " + error.message);
-                return;
-            }
-
-            alert("Video uploaded — go ruin some kids' lives");
-            loadVideos();
-            fileInput.value = ""; // clear input
-        } catch (err) {
-            alert("Something went full retard: " + err.message);
-        }
-    }
-
-    // Load recent videos
-    async function loadVideos() {
-        try {
-            const { data, error } = await supabase.storage
-                .from("videos")
-                .list("", { 
-                    limit: 50, 
-                    sortBy: { column: "created_at", order: "desc" } 
-                });
-
-            if (error) {
-                console.error("List error:", error);
-                return;
-            }
-
-            const container = document.getElementById("videos");
-            container.innerHTML = "";
-
-            data.forEach(file => {
-                const card = document.createElement("div");
-                card.className = "video-card";
-
-                const video = document.createElement("video");
-                video.src = `${supabaseUrl}/storage/v1/object/public/videos/${file.name}`;
-                video.controls = true;
-                video.preload = "metadata";
-
-                const content = document.createElement("div");
-                content.className = "content";
-
-                const title = document.createElement("h3");
-                title.textContent = file.name
-                    .replace(/^\d+_/, "")
-                    .replace(/_/g, " ")
-                    .slice(0, 60);
-
-                const info = document.createElement("p");
-                info.textContent = `Uploaded: ${new Date(file.created_at).toLocaleDateString()}`;
-
-                content.appendChild(title);
-                content.appendChild(info);
-
-                card.appendChild(video);
-                card.appendChild(content);
-                container.appendChild(card);
-            });
-        } catch (err) {
-            console.error("Load videos failed:", err);
-        }
-    }
-
-    // Load recent uploads on page load
-    loadVideos();
+loadRecentVideos()
 </script>
-
 </body>
 </html>
