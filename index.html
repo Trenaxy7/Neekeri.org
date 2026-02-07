@@ -101,6 +101,8 @@
     <div class="modal-content">
         <span class="close" onclick="closeUploadModal()">&times;</span>
         <h2>Upload Your Video</h2>
+        <input type="text" id="videoTitle" placeholder="Video title">
+        <input type="text" id="videoAuthor" placeholder="Author name">
         <input type="file" id="file" accept="video/*" multiple>
         <button onclick="upload()">Upload Now</button>
         <p id="uploadStatus"></p>
@@ -134,35 +136,38 @@ function closeUploadModal() {
 
 /* ---------- UPLOAD FUNCTION ---------- */
 async function upload() {
-  const fileInput = document.getElementById("file")
-  const files = fileInput.files
+  const file = document.getElementById("file").files[0]
+  const title = document.getElementById("videoTitle").value.trim()
+  const author = document.getElementById("videoAuthor").value.trim()
   const status = document.getElementById("uploadStatus")
 
-  if (!files || files.length === 0) {
-    status.textContent = "Pick at least one video first"
+  if (!file || !title || !author) {
+    status.textContent = "Title, author, and video required"
     return
   }
 
-  status.textContent = `Uploading ${files.length} video(s)...`
+  const safeName = file.name.replace(/[^\w.-]/g, "_")
+  const path = `${Date.now()}_${safeName}`
 
-  for (const file of files) {
-    const path = `${Date.now()}_${file.name}`
+  const { error } = await supabaseClient.storage
+    .from("videos")
+    .upload(path, file, {
+      metadata: {
+        title: title,
+        author: author
+      }
+    })
 
-    const { error } = await supabaseClient
-      .storage
-      .from("videos")
-      .upload(path, file)
-
-    if (error) {
-      status.textContent = `Failed on ${file.name}: ${error.message}`
-      return
-    }
+  if (error) {
+    status.textContent = error.message
+    return
   }
 
-  status.textContent = "All uploads successful!"
+  status.textContent = "Uploaded successfully!"
   closeUploadModal()
   loadRecentVideos()
 }
+
 
 /* ---------- LOAD RECENT VIDEOS ---------- */
 async function loadRecentVideos() {
@@ -202,5 +207,6 @@ loadRecentVideos()
 </script>
 </body>
 </html>
+
 
 
