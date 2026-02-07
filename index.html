@@ -113,7 +113,7 @@
 <script>
 /* ---------- SUPABASE SETUP ---------- */
 const supabaseUrl = "https://mpbfujjgxpobsfpqurlc.supabase.co"
-const supabaseAnonKey = "YOUR_ANON_KEY"
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wYmZ1ampneHBvYnNmcHF1cmxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0NzE1ODEsImV4cCI6MjA4NjA0NzU4MX0.l3TeRxam4ZlI2eOCeeRv0JkE_3Q_PZwzJZ1W2Hm6WWo"
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey)
 
 /* ---------- UPLOAD MODAL ---------- */
@@ -147,7 +147,7 @@ async function upload() {
 
   const { error } = await supabaseClient
     .storage
-    .from("videos")
+    .from("VIDEOS")
     .upload(filename, file)
 
   if (error) {
@@ -167,7 +167,7 @@ async function loadRecentVideos() {
 
   const { data: files, error } = await supabaseClient
     .storage
-    .from("videos")
+    .from("VIDEOS")
     .list("", { limit: 50, sortBy: { column: "created_at", order: "desc" } })
 
   if (error || !files || files.length === 0) {
@@ -206,6 +206,7 @@ loadRecentVideos()
 
 </body>
 </html>
+
 
 
 
