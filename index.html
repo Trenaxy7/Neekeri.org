@@ -4,15 +4,250 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MatiasHub</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #0f0f0f;
+            color: #e5e5e5;
+            line-height: 1.5;
+        }
+
+        /* Header */
+        header.header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 5%;
+            background-color: #181818;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #303030;
+        }
+
+        .logo img {
+            height: 48px;
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav a {
+            color: #aaa;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: #ff9800;
+        }
+
+        .search-bar {
+            display: flex;
+        }
+
+        .search-bar input {
+            padding: 10px 14px;
+            width: 260px;
+            background: #121212;
+            border: 1px solid #303030;
+            border-radius: 20px 0 0 20px;
+            color: white;
+            outline: none;
+        }
+
+        .search-bar button {
+            padding: 10px 18px;
+            background: #303030;
+            border: 1px solid #303030;
+            color: white;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .search-bar button:hover {
+            background: #444;
+        }
+
+        /* Main content */
+        main {
+            max-width: 1480px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        .about {
+            text-align: center;
+            padding: 40px 0 20px;
+        }
+
+        .about h2 {
+            font-size: 2.4rem;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .about p {
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            background: #181818;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 32px 0;
+            border: 1px solid #303030;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .upload-section h2 {
+            margin-bottom: 16px;
+            color: #ff9800;
+        }
+
+        .upload-section input[type="file"] {
+            display: block;
+            margin: 12px 0;
+            color: #ddd;
+        }
+
+        .upload-btn {
+            padding: 10px 24px;
+            background: #ff9800;
+            color: black;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .upload-btn:hover {
+            background: #ffb74d;
+        }
+
+        /* Video Sections */
+        .section-title {
+            font-size: 1.8rem;
+            margin: 48px 0 24px;
+            color: #fff;
+        }
+
+        .video-grid,
+        .recent-videos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .video-card {
+            background: #181818;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: 1px solid #222;
+        }
+
+        .video-card:hover {
+            transform: translateY(-6px);
+            border-color: #444;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.5);
+        }
+
+        .video-card img,
+        .video-card video {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            background: #000;
+        }
+
+        .video-card .content {
+            padding: 12px 14px;
+        }
+
+        .video-card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+            color: #fff;
+            line-height: 1.35;
+        }
+
+        .video-card p {
+            font-size: 0.82rem;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: #252525;
+            color: #ff6b6b;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            border: 1px solid #333;
+        }
+
+        /* Video Player */
+        .video-player {
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .video-player h2 {
+            margin-bottom: 24px;
+            font-size: 1.8rem;
+        }
+
+        #videoPlayer {
+            width: 100%;
+            max-width: 1100px;
+            aspect-ratio: 16 / 9;
+            border-radius: 12px;
+            background: #000;
+            border: none;
+        }
+
+        /* Footer note */
+        footer-note {
+            text-align: center;
+            color: #555;
+            padding: 60px 0 40px;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
 
 <header class="header">
     <div class="logo">
-        <img src="https://i.ibb.co/wZ78FCBL/Matias-Hub.png" alt="Logo" height="50">
+        <img src="https://i.ibb.co/wZ78FCBL/Matias-Hub.png" alt="MatiasHub">
     </div>
-    
+   
     <nav class="nav">
         <ul>
             <li><a href="#">Home</a></li>
@@ -29,147 +264,167 @@
 </header>
 
 <main>
-
     <section class="about">
         <h2>Featured Videos</h2>
-        <p>Browse the latest uploads.</p>
+        <p>Browse the sickest and freshest uploads, pure degeneracy.</p>
     </section>
-    
-<section>
-  <h2>Upload video</h2>
-  <input type="file" id="file" accept="video/*">
-  <button onclick="upload()">Upload</button>
-</section>
 
-    <!-- Video Grid -->
+    <!-- Upload Section - nicer placement & look -->
+    <section class="upload-section">
+        <h2>Upload Your Sick Shit</h2>
+        <input type="file" id="file" accept="video/*">
+        <button class="upload-btn" onclick="upload()">Upload Now</button>
+    </section>
+
+    <!-- Featured grid -->
     <section class="video-grid">
-
         <div class="video-card" data-embed="https://www.pornhub.com/embed/684340c846978">
-            <img src="https://i.ibb.co/gMCJtsLq/Nimet-n-malli.png/320x180" alt="Video Thumbnail">
-            <h3>Nooa Jussila niin läski ei yletä munaan</h3>
-            <p>Views: 13.4K | Likes: 2K | Creator: NooaNussila67 | Length: 1:58</p>
-            <div class="tags">
-                #nooajussila #läski #homo
+            <img src="https://i.ibb.co/gMCJtsLq/Nimet-n-malli.png/320x180" alt="Thumbnail">
+            <div class="content">
+                <h3>Nooa Jussila niin läski ei yletä munaan</h3>
+                <p>Views: 13.4K | Likes: 2K | NooaNussila67 | 1:58</p>
+                <div class="tags">
+                    <span class="tag">#nooajussila</span>
+                    <span class="tag">#läski</span>
+                    <span class="tag">#homo</span>
+                </div>
             </div>
         </div>
 
         <div class="video-card" data-embed="https://www.pornhub.com/embed/69178c2f22ccf">
-            <img src="https://i.ibb.co/9kjSKWBs/matiascrop.jpg/320x180" alt="Video Thumbnail">
-            <h3>matias polttaa ja ratsastaa nooa jussilan dildoa</h3>
-            <p>Views: 12M | Likes: 459K | Creator: MatiasTHE_ChildPredator | Length: 10:36</p>
-            <div class="tags">
-                #nooajussila #matias #raiskaus
+            <img src="https://i.ibb.co/9kjSKWBs/matiascrop.jpg/320x180" alt="Thumbnail">
+            <div class="content">
+                <h3>matias polttaa ja ratsastaa nooa jussilan dildoa</h3>
+                <p>Views: 12M | Likes: 459K | MatiasTHE_ChildPredator | 10:36</p>
+                <div class="tags">
+                    <span class="tag">#nooajussila</span>
+                    <span class="tag">#matias</span>
+                    <span class="tag">#raiskaus</span>
+                </div>
             </div>
         </div>
 
         <div class="video-card" data-embed="https://www.pornhub.com/embed/ph634dd7ee8daef">
-            <img src="https://i.ibb.co/0VWLVGXk/01t0a1py9hrmr0cw68stq8haqw-result-0.png/320x180" alt="Video Thumbnail">
-            <h3>ali femboy ottaa fanin munaa onlyfanssissa</h3>
-            <p>Views: 6K | Likes: 865 | Creator: AliMohammedGazaRUbaye | Length: 1:50</p>
-            <div class="tags">
-                #femboy #alrupaualimohmedgaza #neekeri
+            <img src="https://i.ibb.co/0VWLVGXk/01t0a1py9hrmr0cw68stq8haqw-result-0.png/320x180" alt="Thumbnail">
+            <div class="content">
+                <h3>ali femboy ottaa fanin munaa onlyfanssissa</h3>
+                <p>Views: 6K | Likes: 865 | AliMohammedGazaRUbaye | 1:50</p>
+                <div class="tags">
+                    <span class="tag">#femboy</span>
+                    <span class="tag">#neekeri</span>
+                </div>
             </div>
         </div>
 
         <div class="video-card" data-embed="https://www.pornhub.com/embed/675974d08a0bf">
-            <img src="https://i.ibb.co/wrJF5kVw/pcs2pxx6j1rmw0cw68tb6frj8r-result-0.png/320x180" alt="Video Thumbnail">
-            <h3>muslimi sikiö ottaa alin kyrpää</h3>
-            <p>Views: 89K | Likes: 16K | Creator: AliMohammedGazaRUbaye | Length: 19:41</p>
-            <div class="tags">
-                #cp #scat #sikiö
+            <img src="https://i.ibb.co/wrJF5kVw/pcs2pxx6j1rmw0cw68tb6frj8r-result-0.png/320x180" alt="Thumbnail">
+            <div class="content">
+                <h3>muslimi sikiö ottaa alin kyrpää</h3>
+                <p>Views: 89K | Likes: 16K | AliMohammedGazaRUbaye | 19:41</p>
+                <div class="tags">
+                    <span class="tag">#cp</span>
+                    <span class="tag">#scat</span>
+                    <span class="tag">#sikiö</span>
+                </div>
             </div>
         </div>
-
     </section>
 
-    <!-- Video Player -->
+    <!-- Recent Uploads -->
+    <h2 class="section-title">Recent Uploads</h2>
+    <section class="recent-videos" id="videos">
+        <!-- Filled by JS -->
+    </section>
+
+    <!-- Player -->
     <section class="video-player">
-        <h2>Watch Video</h2>
-<iframe
-  id="videoPlayer"
-  width="100%"
-  height="500"
-  frameborder="0"
-  allow="autoplay; fullscreen; picture-in-picture"
-  allowfullscreen>
-</iframe>
+        <h2>Watch This Degenerate Shit</h2>
+        <iframe
+            id="videoPlayer"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen>
+        </iframe>
     </section>
 
-    <section id="videos"></section>
-
-    <h1>© 2026 Google LLC. Sivuston on tehnyt Google itse.</h1>
-
+    <div class="footer-note">
+        © 2026 Google LLC. Sivuston on tehnyt Google itse. (just kidding)
+    </div>
 </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* ---------- HARD-CODED CARDS ---------- */
-const player = document.getElementById("videoPlayer")
+    const player = document.getElementById("videoPlayer");
 
-document.querySelectorAll(".video-card").forEach(card => {
-  card.addEventListener("click", () => {
-    player.src = card.dataset.embed
-    player.scrollIntoView({ behavior: "smooth" })
-  })
-})
+    // Featured cards click
+    document.querySelectorAll(".video-card").forEach(card => {
+        card.addEventListener("click", () => {
+            player.src = card.dataset.embed;
+            player.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+    });
 
-/* ---------- SUPABASE SETUP ---------- */
-const supabaseUrl = "https://mpbfujjgxpobsfpqurlc.supabase.co"
-const supabaseAnonKey =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wYmZ1ampneHBvYnNmcHF1cmxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0NzE1ODEsImV4cCI6MjA4NjA0NzU4MX0.l3TeRxam4ZlI2eOCeeRv0JkE_3Q_PZwzJZ1W2Hm6WWo"
+    // Supabase
+    const supabaseUrl = "https://mpbfujjgxpobsfpqurlc.supabase.co";
+    const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wYmZ1ampneHBvYnNmcHF1cmxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0NzE1ODEsImV4cCI6MjA4NjA0NzU4MX0.l3TeRxam4ZlI2eOCeeRv0JkE_3Q_PZwzJZ1W2Hm6WWo";
+    const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
-const supabaseClient = supabase.createClient(
-  supabaseUrl,
-  supabaseAnonKey
-)
+    async function upload() {
+        const fileInput = document.getElementById("file");
+        const file = fileInput.files[0];
+        if (!file) return alert("Pick a fucking video, retard");
+        
+        const path = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+        const { error } = await supabase.storage
+            .from("videos")
+            .upload(path, file);
 
-/* ---------- UPLOAD ---------- */
-async function upload() {
-  const fileInput = document.getElementById("file")
-  const file = fileInput.files[0]
-  if (!file) return alert("Pick a video")
+        if (error) return alert(error.message);
+        alert("Upload success — go ruin some lives");
+        loadVideos();
+        fileInput.value = "";
+    }
 
-  const path = `${Date.now()}_${file.name}`
+    async function loadVideos() {
+        const { data, error } = await supabase.storage
+            .from("videos")
+            .list("", { limit: 50, sortBy: { column: "created_at", order: "desc" } });
 
-  const { error } = await supabaseClient
-    .storage
-    .from("videos")
-    .upload(path, file)
+        if (error) return alert(error.message);
 
-  if (error) return alert(error.message)
+        const container = document.getElementById("videos");
+        container.innerHTML = "";
 
-  loadVideos()
-}
+        data.forEach(file => {
+            const card = document.createElement("div");
+            card.className = "video-card";
 
-/* ---------- LOAD VIDEOS ---------- */
-async function loadVideos() {
-  const { data, error } = await supabaseClient
-    .storage
-    .from("videos")
-    .list("", { limit: 50 })
+            const video = document.createElement("video");
+            video.src = `${supabaseUrl}/storage/v1/object/public/videos/${file.name}`;
+            video.controls = true;
+            video.preload = "metadata";
 
-  if (error) return alert(error.message)
+            const content = document.createElement("div");
+            content.className = "content";
 
-  const container = document.getElementById("videos")
-  container.innerHTML = ""
+            const title = document.createElement("h3");
+            title.textContent = file.name.replace(/^\d+_/, "").replace(/_/g, " ");
 
-  data.forEach(file => {
-    const video = document.createElement("video")
-    video.src = `${supabaseUrl}/storage/v1/object/public/videos/${file.name}`
-    video.controls = true
-    video.width = 400
-    container.appendChild(video)
-  })
-}
+            const info = document.createElement("p");
+            info.textContent = `Uploaded: ${new Date(file.created_at).toLocaleDateString()}`;
 
-loadVideos()
+            content.appendChild(title);
+            content.appendChild(info);
+
+            card.appendChild(video);
+            card.appendChild(content);
+            container.appendChild(card);
+        });
+    }
+
+    // Load on page load
+    loadVideos();
 </script>
-    
+
 </body>
 </html>
-
-
-
-
-
