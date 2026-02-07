@@ -177,31 +177,35 @@ async function loadRecentVideos() {
   const { data: files, error } = await supabaseClient
     .storage
     .from("videos")
-    .list("", { limit: 50, sortBy: { column: "created_at", order: "desc" } })
+    .list("uploads", {
+      limit: 50,
+      sortBy: { column: "created_at", order: "desc" }
+    })
 
-  if (error) {
+  if (error || !files) {
+    container.innerHTML = "<p>Failed to load videos.</p>"
     console.error(error)
     return
   }
 
-  if (!files || files.length === 0) {
+  if (files.length === 0) {
     container.innerHTML = "<p>No uploads yet.</p>"
     return
   }
 
   for (const file of files) {
-    const { data: meta, error: metaError } =
-      await supabaseClient.storage
-        .from("videos")
-        .getMetadata(file.name)
+    const fullPath = `uploads/${file.name}`
 
-    if (metaError) continue
+    const { data: meta } = await supabaseClient
+      .storage
+      .from("videos")
+      .getMetadata(fullPath)
 
-    const title = meta.metadata?.title || "Untitled"
-    const author = meta.metadata?.author || "Anonymous"
+    const title = meta?.metadata?.title || "Untitled"
+    const author = meta?.metadata?.author || "Anonymous"
 
     const url =
-      `${supabaseUrl}/storage/v1/object/public/videos/${file.name}`
+      `${supabaseUrl}/storage/v1/object/public/videos/${fullPath}`
 
     const card = document.createElement("div")
     card.className = "video-card"
@@ -219,10 +223,12 @@ async function loadRecentVideos() {
 }
 
 
+
 loadRecentVideos()
 </script>
 </body>
 </html>
+
 
 
 
