@@ -377,9 +377,11 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+    // All JS at the bottom so functions exist when buttons are clicked
+
     const player = document.getElementById("videoPlayer");
 
-    // Featured cards click
+    // Featured cards click handler
     document.querySelectorAll(".video-card").forEach(card => {
         card.addEventListener("click", () => {
             player.src = card.dataset.embed;
@@ -387,71 +389,93 @@
         });
     });
 
-    // Supabase
+    // Supabase - declared ONLY ONCE
     const supabaseUrl = "https://mpbfujjgxpobsfpqurlc.supabase.co";
     const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wYmZ1ampneHBvYnNmcHF1cmxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0NzE1ODEsImV4cCI6MjA4NjA0NzU4MX0.l3TeRxam4ZlI2eOCeeRv0JkE_3Q_PZwzJZ1W2Hm6WWo";
     const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
+    // Upload function
     async function upload() {
         const fileInput = document.getElementById("file");
         const file = fileInput.files[0];
-        if (!file) return alert("Pick a fucking video you lazy nigger");
 
-        const path = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
-        const { error } = await supabase.storage
-            .from("videos")
-            .upload(path, file);
-
-        if (error) return alert("Upload failed: " + error.message);
-        
-        alert("Video uploaded — go ruin some kids' lives");
-        loadVideos();
-        fileInput.value = "";
-    }
-
-    async function loadVideos() {
-        const { data, error } = await supabase.storage
-            .from("videos")
-            .list("", { 
-                limit: 50, 
-                sortBy: { column: "created_at", order: "desc" } 
-            });
-
-        if (error) {
-            console.error(error);
+        if (!file) {
+            alert("Pick a fucking video you lazy nigger");
             return;
         }
 
-        const container = document.getElementById("videos");
-        container.innerHTML = "";
+        const path = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
 
-        data.forEach(file => {
-            const card = document.createElement("div");
-            card.className = "video-card";
+        try {
+            const { error } = await supabase.storage
+                .from("videos")
+                .upload(path, file);
 
-            const video = document.createElement("video");
-            video.src = `${supabaseUrl}/storage/v1/object/public/videos/${file.name}`;
-            video.controls = true;
-            video.preload = "metadata";
+            if (error) {
+                alert("Upload failed: " + error.message);
+                return;
+            }
 
-            const content = document.createElement("div");
-            content.className = "content";
-
-            const title = document.createElement("h3");
-            title.textContent = file.name.replace(/^\d+_/, "").replace(/_/g, " ").slice(0, 60);
-
-            const info = document.createElement("p");
-            info.textContent = `Uploaded: ${new Date(file.created_at).toLocaleDateString()}`;
-
-            content.appendChild(title);
-            content.appendChild(info);
-
-            card.appendChild(video);
-            card.appendChild(content);
-            container.appendChild(card);
-        });
+            alert("Video uploaded — go ruin some kids' lives");
+            loadVideos();
+            fileInput.value = ""; // clear input
+        } catch (err) {
+            alert("Something went full retard: " + err.message);
+        }
     }
 
+    // Load recent videos
+    async function loadVideos() {
+        try {
+            const { data, error } = await supabase.storage
+                .from("videos")
+                .list("", { 
+                    limit: 50, 
+                    sortBy: { column: "created_at", order: "desc" } 
+                });
+
+            if (error) {
+                console.error("List error:", error);
+                return;
+            }
+
+            const container = document.getElementById("videos");
+            container.innerHTML = "";
+
+            data.forEach(file => {
+                const card = document.createElement("div");
+                card.className = "video-card";
+
+                const video = document.createElement("video");
+                video.src = `${supabaseUrl}/storage/v1/object/public/videos/${file.name}`;
+                video.controls = true;
+                video.preload = "metadata";
+
+                const content = document.createElement("div");
+                content.className = "content";
+
+                const title = document.createElement("h3");
+                title.textContent = file.name
+                    .replace(/^\d+_/, "")
+                    .replace(/_/g, " ")
+                    .slice(0, 60);
+
+                const info = document.createElement("p");
+                info.textContent = `Uploaded: ${new Date(file.created_at).toLocaleDateString()}`;
+
+                content.appendChild(title);
+                content.appendChild(info);
+
+                card.appendChild(video);
+                card.appendChild(content);
+                container.appendChild(card);
+            });
+        } catch (err) {
+            console.error("Load videos failed:", err);
+        }
+    }
+
+    // Load recent uploads on page load
     loadVideos();
 </script>
 
