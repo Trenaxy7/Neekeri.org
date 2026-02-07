@@ -22,30 +22,40 @@
         /* Header */
         header.header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 16px 5%;
+            justify-content: space-between;
+            padding: 14px 5%;
             background-color: #181818;
             position: sticky;
             top: 0;
-            z-index: 100;
-            border-bottom: 1px solid #303030;
+            z-index: 999;
+            border-bottom: 1px solid #222;
+            flex-wrap: wrap;
+            gap: 16px;
         }
 
         .logo img {
-            height: 48px;
+            height: 44px;
+        }
+
+        .nav-and-upload {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            flex-wrap: wrap;
         }
 
         .nav ul {
             list-style: none;
             display: flex;
-            gap: 32px;
+            gap: 28px;
         }
 
         .nav a {
             color: #aaa;
             text-decoration: none;
             font-weight: 500;
+            font-size: 15px;
             transition: color 0.2s;
         }
 
@@ -53,13 +63,48 @@
             color: #ff9800;
         }
 
+        /* Upload in header */
+        .header-upload {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #222;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+
+        .header-upload input[type="file"] {
+            color: #ddd;
+            font-size: 14px;
+        }
+
+        .upload-btn {
+            padding: 8px 16px;
+            background: #ff5722;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .upload-btn:hover {
+            background: #ff7043;
+            transform: translateY(-1px);
+        }
+
         .search-bar {
             display: flex;
+            flex: 1;
+            max-width: 340px;
         }
 
         .search-bar input {
+            flex: 1;
             padding: 10px 14px;
-            width: 260px;
             background: #121212;
             border: 1px solid #303030;
             border-radius: 20px 0 0 20px;
@@ -102,44 +147,6 @@
         .about p {
             color: #aaa;
             font-size: 1.1rem;
-        }
-
-        /* Upload Section */
-        .upload-section {
-            background: #181818;
-            border-radius: 12px;
-            padding: 24px;
-            margin: 32px 0;
-            border: 1px solid #303030;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .upload-section h2 {
-            margin-bottom: 16px;
-            color: #ff9800;
-        }
-
-        .upload-section input[type="file"] {
-            display: block;
-            margin: 12px 0;
-            color: #ddd;
-        }
-
-        .upload-btn {
-            padding: 10px 24px;
-            background: #ff9800;
-            color: black;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .upload-btn:hover {
-            background: #ffb74d;
         }
 
         /* Video Sections */
@@ -232,12 +239,28 @@
             border: none;
         }
 
-        /* Footer note */
-        footer-note {
+        .footer-note {
             text-align: center;
             color: #555;
             padding: 60px 0 40px;
             font-size: 0.9rem;
+        }
+
+        @media (max-width: 1024px) {
+            header.header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .nav-and-upload {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+                width: 100%;
+            }
+            .search-bar {
+                width: 100%;
+                max-width: none;
+            }
         }
     </style>
 </head>
@@ -247,18 +270,25 @@
     <div class="logo">
         <img src="https://i.ibb.co/wZ78FCBL/Matias-Hub.png" alt="MatiasHub">
     </div>
-   
-    <nav class="nav">
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Categories</a></li>
-            <li><a href="#">Trending</a></li>
-            <li><a href="#">About</a></li>
-        </ul>
-    </nav>
+
+    <div class="nav-and-upload">
+        <nav class="nav">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Categories</a></li>
+                <li><a href="#">Trending</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-upload">
+            <input type="file" id="file" accept="video/*">
+            <button class="upload-btn" onclick="upload()">Upload Degenerate Shit</button>
+        </div>
+    </div>
 
     <div class="search-bar">
-        <input type="text" placeholder="Search videos...">
+        <input type="text" placeholder="Search for nigger farts and CP...">
         <button>Search</button>
     </div>
 </header>
@@ -266,14 +296,7 @@
 <main>
     <section class="about">
         <h2>Featured Videos</h2>
-        <p>Browse the sickest and freshest uploads, pure degeneracy.</p>
-    </section>
-
-    <!-- Upload Section - nicer placement & look -->
-    <section class="upload-section">
-        <h2>Upload Your Sick Shit</h2>
-        <input type="file" id="file" accept="video/*">
-        <button class="upload-btn" onclick="upload()">Upload Now</button>
+        <p>The sickest, freshest, most fucked up content straight from the sewers.</p>
     </section>
 
     <!-- Featured grid -->
@@ -331,14 +354,14 @@
     </section>
 
     <!-- Recent Uploads -->
-    <h2 class="section-title">Recent Uploads</h2>
+    <h2 class="section-title">Recent Uploads - Freshly Raped Content</h2>
     <section class="recent-videos" id="videos">
         <!-- Filled by JS -->
     </section>
 
     <!-- Player -->
     <section class="video-player">
-        <h2>Watch This Degenerate Shit</h2>
+        <h2>Watch This Nasty Shit</h2>
         <iframe
             id="videoPlayer"
             frameborder="0"
@@ -348,7 +371,7 @@
     </section>
 
     <div class="footer-note">
-        © 2026 Google LLC. Sivuston on tehnyt Google itse. (just kidding)
+        © 2026 Google LLC. Built by Google to promote diversity and child grooming worldwide.
     </div>
 </main>
 
@@ -372,15 +395,16 @@
     async function upload() {
         const fileInput = document.getElementById("file");
         const file = fileInput.files[0];
-        if (!file) return alert("Pick a fucking video, retard");
-        
+        if (!file) return alert("Pick a fucking video you lazy nigger");
+
         const path = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
         const { error } = await supabase.storage
             .from("videos")
             .upload(path, file);
 
-        if (error) return alert(error.message);
-        alert("Upload success — go ruin some lives");
+        if (error) return alert("Upload failed: " + error.message);
+        
+        alert("Video uploaded — go ruin some kids' lives");
         loadVideos();
         fileInput.value = "";
     }
@@ -388,9 +412,15 @@
     async function loadVideos() {
         const { data, error } = await supabase.storage
             .from("videos")
-            .list("", { limit: 50, sortBy: { column: "created_at", order: "desc" } });
+            .list("", { 
+                limit: 50, 
+                sortBy: { column: "created_at", order: "desc" } 
+            });
 
-        if (error) return alert(error.message);
+        if (error) {
+            console.error(error);
+            return;
+        }
 
         const container = document.getElementById("videos");
         container.innerHTML = "";
@@ -408,7 +438,7 @@
             content.className = "content";
 
             const title = document.createElement("h3");
-            title.textContent = file.name.replace(/^\d+_/, "").replace(/_/g, " ");
+            title.textContent = file.name.replace(/^\d+_/, "").replace(/_/g, " ").slice(0, 60);
 
             const info = document.createElement("p");
             info.textContent = `Uploaded: ${new Date(file.created_at).toLocaleDateString()}`;
@@ -422,7 +452,6 @@
         });
     }
 
-    // Load on page load
     loadVideos();
 </script>
 
