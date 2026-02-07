@@ -202,10 +202,25 @@ async function loadRecentVideos() {
 
 /* ---------- INIT ---------- */
 loadRecentVideos()
+
+    /* ---------- FEATURED VIDEO CLICK HANDLER ---------- */
+const player = document.getElementById("videoPlayer")
+
+document.querySelectorAll(".video-card[data-embed]").forEach(card => {
+  card.addEventListener("click", () => {
+    const embed = card.dataset.embed
+    if (!embed) return
+
+    player.src = embed
+    player.scrollIntoView({ behavior: "smooth" })
+  })
+})
+
 </script>
 
 </body>
 </html>
+
 
 
 
