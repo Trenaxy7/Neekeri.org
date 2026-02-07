@@ -102,29 +102,32 @@
 </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
+
 <script>
-    const cards = document.querySelectorAll('.video-card');
-    const player = document.getElementById('videoPlayer');
+/* ---------- HARD-CODED CARDS ---------- */
+const player = document.getElementById("videoPlayer")
 
-    cards.forEach(card => {
-        card.addEventListener('click', () => {
-            const embed = card.dataset.embed;
-            player.src = embed;
-            player.scrollIntoView({ behavior: 'smooth' });
-        });
-    });
+document.querySelectorAll(".video-card").forEach(card => {
+  card.addEventListener("click", () => {
+    player.src = card.dataset.embed
+    player.scrollIntoView({ behavior: "smooth" })
+  })
+})
 
+/* ---------- SUPABASE SETUP ---------- */
 const supabaseUrl = "https://mpbfujjgxpobsfpqurlc.supabase.co"
-const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wYmZ1ampneHBvYnNmcHF1cmxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0NzE1ODEsImV4cCI6MjA4NjA0NzU4MX0.l3TeRxam4ZlI2eOCeeRv0JkE_3Q_PZwzJZ1W2Hm6WWo"
+const supabaseAnonKey =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wYmZ1ampneHBvYnNmcHF1cmxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0NzE1ODEsImV4cCI6MjA4NjA0NzU4MX0.l3TeRxam4ZlI2eOCeeRv0JkE_3Q_PZwzJZ1W2Hm6WWo"
 
 const supabaseClient = supabase.createClient(
   supabaseUrl,
   supabaseAnonKey
 )
 
+/* ---------- UPLOAD ---------- */
 async function upload() {
-  const file = document.getElementById("file").files[0]
+  const fileInput = document.getElementById("file")
+  const file = fileInput.files[0]
   if (!file) return alert("Pick a video")
 
   const path = `${Date.now()}_${file.name}`
@@ -135,9 +138,11 @@ async function upload() {
     .upload(path, file)
 
   if (error) return alert(error.message)
+
   loadVideos()
 }
 
+/* ---------- LOAD VIDEOS ---------- */
 async function loadVideos() {
   const { data, error } = await supabaseClient
     .storage
@@ -145,9 +150,6 @@ async function loadVideos() {
     .list("", { limit: 50 })
 
   if (error) return alert(error.message)
-
-  console.log("Videos:", data)
-}
 
   const container = document.getElementById("videos")
   container.innerHTML = ""
@@ -162,11 +164,11 @@ async function loadVideos() {
 }
 
 loadVideos()
-    
 </script>
     
 </body>
 </html>
+
 
 
 
