@@ -34,6 +34,12 @@
         <h2>Featured Videos</h2>
         <p>Browse the latest uploads.</p>
     </section>
+    
+<section>
+  <h2>Upload video</h2>
+  <input type="file" id="file" accept="video/*">
+  <button onclick="upload()">Upload</button>
+</section>
 
     <!-- Video Grid -->
     <section class="video-grid">
@@ -88,10 +94,14 @@
         </iframe>
     </section>
 
+    <section id="videos"></section>
+
     <h1>© 2026 Google LLC. Sivuston on tehnyt Google itse.</h1>
 
 </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
 <script>
     const cards = document.querySelectorAll('.video-card');
     const player = document.getElementById('videoPlayer');
@@ -103,7 +113,69 @@
             player.scrollIntoView({ behavior: 'smooth' });
         });
     });
-</script>
 
+    const supabaseUrl = "https://mpbfujjgxpobsfpqurlc.supabase.co"
+const supabaseAnonKey =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wYmZ1ampneHBvYnNmcHF1cmxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0NzE1ODEsImV4cCI6MjA4NjA0NzU4MX0.l3TeRxam4ZlI2eOCeeRv0JkE_3Q_PZwzJZ1W2Hm6WWo"
+
+const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey)
+
+async function upload() {
+  const file = document.getElementById("file").files[0]
+  if (!file) return alert("Pick a video")
+
+  if (!file.type.startsWith("video/")) {
+    alert("Only video files allowed")
+    return
+  }
+
+  if (file.size > 200 * 1024 * 1024) {
+    alert("Max size 200MB")
+    return
+  }
+
+  const path = `${Date.now()}_${file.name}`
+
+  const { error } = await supabase
+    .storage
+    .from("videos")
+    .upload(path, file)
+
+  if (error) {
+    alert(error.message)
+    return
+  }
+
+  loadVideos()
+}
+
+async function loadVideos() {
+  const { data, error } = await supabase
+    .storage
+    .from("videos")
+    .list("", { limit: 100, sortBy: { column: "created_at", order: "desc" } })
+
+  if (error) {
+    alert(error.message)
+    return
+  }
+
+  const container = document.getElementById("videos")
+  container.innerHTML = ""
+
+  data.forEach(file => {
+    const video = document.createElement("video")
+    video.src = `${supabaseUrl}/storage/v1/object/public/videos/${file.name}`
+    video.controls = true
+    video.width = 400
+    container.appendChild(video)
+  })
+}
+
+loadVideos()
+    
+</script>
+    
 </body>
 </html>
+
