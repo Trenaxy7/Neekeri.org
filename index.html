@@ -111,30 +111,21 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* ---------- HARD-CODED CARDS ---------- */
-const player = document.getElementById("videoPlayer")
-document.querySelectorAll(".video-card").forEach(card => {
-  card.addEventListener("click", () => {
-    player.src = card.dataset.embed
-    player.scrollIntoView({ behavior: "smooth" })
-  })
-})
-
 /* ---------- SUPABASE SETUP ---------- */
 const supabaseUrl = "https://mpbfujjgxpobsfpqurlc.supabase.co"
-const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wYmZ1ampneHBvYnNmcHF1cmxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0NzE1ODEsImV4cCI6MjA4NjA0NzU4MX0.l3TeRxam4ZlI2eOCeeRv0JkE_3Q_PZwzJZ1W2Hm6WWo"
+const supabaseAnonKey = "YOUR_ANON_KEY"
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey)
 
 /* ---------- UPLOAD MODAL ---------- */
 function openUploadModal() {
-  document.getElementById("uploadModal").style.display = "block";
-  document.getElementById("uploadStatus").textContent = "";
+  document.getElementById("uploadModal").style.display = "block"
+  document.getElementById("uploadStatus").textContent = ""
 }
 function closeUploadModal() {
-  document.getElementById("uploadModal").style.display = "none";
+  document.getElementById("uploadModal").style.display = "none"
 }
 
-/* ---------- UPLOAD FUNCTION ---------- */
+/* ---------- UPLOAD FUNCTION (FINAL) ---------- */
 async function upload() {
   const file = document.getElementById("file").files[0]
   const title = document.getElementById("videoTitle").value.trim()
@@ -146,17 +137,18 @@ async function upload() {
     return
   }
 
-  const safeName = file.name.replace(/[^\w.-]/g, "_")
-  const path = `${Date.now()}_${safeName}`
+  const safeTitle = title.replace(/[^a-z0-9]/gi, "_")
+  const safeAuthor = author.replace(/[^a-z0-9]/gi, "_")
+  const ext = file.name.split(".").pop()
 
-  const { error } = await supabaseClient.storage
+  const filename = `${Date.now()}__${safeTitle}__${safeAuthor}.${ext}`
+
+  console.log("UPLOADING AS:", filename)
+
+  const { error } = await supabaseClient
+    .storage
     .from("videos")
-    .upload(path, file, {
-      metadata: {
-        title: title,
-        author: author
-      }
-    })
+    .upload(filename, file)
 
   if (error) {
     status.textContent = error.message
@@ -168,8 +160,7 @@ async function upload() {
   loadRecentVideos()
 }
 
-
-/* ---------- LOAD RECENT VIDEOS ---------- */
+/* ---------- LOAD RECENT VIDEOS (FINAL) ---------- */
 async function loadRecentVideos() {
   const container = document.getElementById("recent-videos")
   container.innerHTML = ""
@@ -177,7 +168,7 @@ async function loadRecentVideos() {
   const { data: files, error } = await supabaseClient
     .storage
     .from("videos")
-    .list("", { limit: 50 })
+    .list("", { limit: 50, sortBy: { column: "created_at", order: "desc" } })
 
   if (error || !files || files.length === 0) {
     container.innerHTML = "<p>No uploads yet.</p>"
@@ -198,7 +189,7 @@ async function loadRecentVideos() {
     card.className = "video-card"
 
     card.innerHTML = `
-      <video controls width="100%">
+      <video controls width="100%" style="border-radius:10px;">
         <source src="${url}" type="video/mp4">
       </video>
       <h3>${title}</h3>
@@ -209,13 +200,13 @@ async function loadRecentVideos() {
   }
 }
 
-
-
-
+/* ---------- INIT ---------- */
 loadRecentVideos()
 </script>
+
 </body>
 </html>
+
 
 
 
