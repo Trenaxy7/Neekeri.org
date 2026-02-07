@@ -165,7 +165,7 @@ async function loadRecentVideos() {
   container.innerHTML = ""
   
   if (data.length === 0) {
-    container.innerHTML = "<p>No recent uploads yet.</p>"
+    container.innerHTML = "<p style='color:#888;text-align:center;'>No recent nigger uploads yet.</p>"
     return
   }
   
@@ -176,11 +176,15 @@ async function loadRecentVideos() {
     const videoUrl = `${supabaseUrl}/storage/v1/object/public/videos/${file.name}`
     
     card.innerHTML = `
-      <video controls width="100%" style="border-radius:10px;">
-        <source src="${videoUrl}" type="video/mp4">
-      </video>
-      <h3>${file.name}</h3>
-      <p>Uploaded: ${new Date(file.created_at).toLocaleDateString()}</p>
+      <div class="media-container">
+        <video controls>
+          <source src="${videoUrl}" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-info">
+        <h3>${file.name}</h3>
+        <p>Uploaded: ${new Date(file.created_at).toLocaleDateString()}</p>
+      </div>
     `
     
     container.appendChild(card)
@@ -191,4 +195,5 @@ loadRecentVideos()
 </script>
 </body>
 </html>
+
 
