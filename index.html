@@ -171,42 +171,52 @@ async function upload() {
 
 /* ---------- LOAD RECENT VIDEOS ---------- */
 async function loadRecentVideos() {
-  const { data, error } = await supabaseClient.storage.from("videos").list("", { limit: 50 })
+  const { data, error } = await supabaseClient
+    .storage
+    .from("videos")
+    .list("", { limit: 50, sortBy: { column: "created_at", order: "desc" } })
+
   if (error) {
     console.error(error)
     return
   }
-  
+
   const container = document.getElementById("recent-videos")
   container.innerHTML = ""
-  
+
   if (data.length === 0) {
-    container.innerHTML = "<p>No recent uploads yet.</p>"
+    container.innerHTML = "<p>No uploads yet.</p>"
     return
   }
-  
+
   data.forEach(file => {
+    const url =
+      `${supabaseUrl}/storage/v1/object/public/videos/${file.name}`
+
+    const title = file.metadata?.title || "Untitled"
+    const author = file.metadata?.author || "Anonymous"
+
     const card = document.createElement("div")
     card.className = "video-card"
-    
-    const videoUrl = `${supabaseUrl}/storage/v1/object/public/videos/${file.name}`
-    
+
     card.innerHTML = `
       <video controls width="100%" style="border-radius:10px;">
-        <source src="${videoUrl}" type="video/mp4">
+        <source src="${url}" type="video/mp4">
       </video>
-      <h3>${file.name}</h3>
-      <p>Uploaded: ${new Date(file.created_at).toLocaleDateString()}</p>
+      <h3>${title}</h3>
+      <p>By ${author}</p>
     `
-    
+
     container.appendChild(card)
   })
 }
+
 
 loadRecentVideos()
 </script>
 </body>
 </html>
+
 
 
 
